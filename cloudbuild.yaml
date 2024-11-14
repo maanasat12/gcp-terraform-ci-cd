@@ -1,0 +1,26 @@
+# cloudbuild.yaml
+
+steps:
+  # Step 1: Terraform Init
+  - name: "hashicorp/terraform:1.0.11"
+    entrypoint: "sh"
+    args:
+      - "-c"
+      - |
+        terraform init
+
+  # Step 2: Terraform Apply
+  - name: "hashicorp/terraform:1.0.11"
+    entrypoint: "sh"
+    args:
+      - "-c"
+      - |
+        terraform apply -auto-approve
+
+# Set environment variables for the project
+substitutions:
+  _REGION: "us-central1"
+  _ZONE: "us-central1-a"
+
+# Allow Cloud Build to apply Terraform changes
+# It requires IAM permissions for managing GCP resources
